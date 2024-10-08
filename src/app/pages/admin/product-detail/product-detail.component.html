@@ -1,0 +1,31 @@
+<!-- #region  <div *ngIf="product" > -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!--<h2>{{product.productName| uppercase}} Details</h2> -->
+
+      <div class="control-row">
+        <div class="control no-marging">
+          <label for="product-name">Product name: </label>
+          <input id="product-name" type="text" formControlName="productName" placeholder="productName"> 
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control no-marging">
+          <label for="product-price">Product price: </label>
+          <input id="product-price" type="text" formControlName="productPrice" placeholder="productPrice"> 
+        </div>
+      </div>
+
+      <button class="button">עדכון</button>
+
+      @if (productNameIsInvalid) {
+        <p class="control-error">Please enter a valid product name</p>
+      }
+
+      @if (productPriceIsInvalid) {
+        <p class="control-error">Please enter a valid product price</p>
+      }
+      
+
+    </form>
+<!-- #region  </div>-->
