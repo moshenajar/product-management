@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProductService } from '../../services/product/product.service';
+import { ProductService } from '../services/product/product.service';
 import { Product } from './product';
-import { ProductDetailComponent } from '../product-detail/product-detail.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { NavigationExtras, Router } from '@angular/router';
+import { AppState } from '../../store/app-state';
+import { Store } from "@ngrx/store";
+import { setSelectedProduct } from "../products/store/product/product.action";
 
 @Component({
   selector: 'app-products',
@@ -23,6 +26,7 @@ export class ProductsComponent implements OnInit {
   selectedProduct?: Product;
 
   constructor(
+    private store: Store<AppState>,
     private productSrv: ProductService,
     private router: Router
   ) {}
@@ -65,14 +69,10 @@ export class ProductsComponent implements OnInit {
   }
 
   onSelect(product: Product): void {
-    console.log(product);
-    const navigationExtras: NavigationExtras = {
-      state: {
-        data: product
-      }
-    };
-
-    this.router.navigate(['/productdetails'], navigationExtras);
+    //console.log(product);
+    //alert("onSelect");
+    this.store.dispatch(setSelectedProduct({product: product}));
+    this.router.navigate(['/productdetails']);
   }
 
   onEdit(product: any) {

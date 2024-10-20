@@ -1,9 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgIf, UpperCasePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Product } from '../products/product';
+import { Product } from '../product';
 import { NavigationExtras, Router } from '@angular/router';
-
+import { AppState } from "../../../store/app-state";
+import { select, Store } from "@ngrx/store";
+import { selectProduct } from "../store/product/product.selectors";
+import { filter, first, map, Observable, take, tap } from "rxjs";
+import { setSelectedProduct } from '../store/product/product.action';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,31 +18,55 @@ import { NavigationExtras, Router } from '@angular/router';
 })
 export class ProductDetailComponent implements OnInit {
   @Input() product?: Product;
-  ppp!: Product;
+  selectedProduct?: Product;
+  counter$ = this.store.select(selectProduct);
+
 
   constructor(
-    //private productSrv: ProductService,
+    private store: Store<AppState>,
     private router: Router
   ) {
-    console.log(this.router.getCurrentNavigation()?.extras.state);
+    
   }
 
   form = new FormGroup({
+    categoryId: new FormControl('', {
+      validators:[Validators.required]
+    }),
+    Sku: new FormControl('', {
+      validators:[Validators.required]
+    }),
     productName: new FormControl('', {
       validators:[Validators.required]
     }),
     productPrice: new FormControl('', {
       validators:[Validators.required]
     }),
+    productShortName: new FormControl('', {
+      validators:[Validators.required]
+    }),
+    productDescription: new FormControl('', {
+      validators:[Validators.required]
+    }),
+    productImageUrl: new FormControl('', {
+      validators:[Validators.required]
+    }),
   });
 
+ 
   ngOnInit(): void {
-    const currentState = this.router.lastSuccessfulNavigation;
-    //console.log(history.state.data.product);
-    //this.form.controls.productName.setValue(currentState?.extras.);
-    //this.ppp = currentState?.extras;
-    //console.log(currentState?.extras?.state['']);
-   
+    
+     this.counter$.subscribe(obg=>{
+      this.form.controls.categoryId.setValue(obg?.categoryId! as any);
+      this.form.controls.Sku.setValue(obg?.productSku ?? "");
+      this.form.controls.productName.setValue(obg?.productName ?? "");
+      this.form.controls.productPrice.setValue(obg?.productPrice! as any);
+      this.form.controls.productShortName.setValue(obg?.productShortName ?? "");
+      this.form.controls.productDescription.setValue(obg?.productDescription ?? "");
+      this.form.controls.productImageUrl.setValue(obg?.productImageUrl ?? "");
+     
+    });
+     
   }
 
   get productNameIsInvalid(){
