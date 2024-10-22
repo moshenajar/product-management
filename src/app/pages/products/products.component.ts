@@ -7,7 +7,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { NavigationExtras, Router } from '@angular/router';
 import { AppState } from '../../store/app-state';
 import { Store } from "@ngrx/store";
-import { setSelectedProduct } from "../products/store/product/product.action";
+import { productActions } from "../products/store/product/product.action";
+import { selectProducts } from './store/product/product.selectors';
 
 @Component({
   selector: 'app-products',
@@ -20,19 +21,19 @@ export class ProductsComponent implements OnInit {
   isSidePanelVisible: boolean = false;
 
   categoryList: any[] = [];
-  productsList: any[] = [];
+  productsList: Product[] = [];
   //productsList$?: Observable<any[]>;
   product!: Product;
   selectedProduct?: Product;
+  products: Product[] = [];
+  productList$ = this.store.select(selectProducts);
 
   constructor(
     private store: Store<AppState>,
-    private productSrv: ProductService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getAllCategory();
     this.getProducts();
   }
 
@@ -43,21 +44,18 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts() {
-    //this.productsList$ = this.productSrv.getProducts().pipe(map(res => res.data));
-    this.productSrv.getProducts().subscribe((res: any) => {
-      this.productsList = res;
-    });
+    this.store.dispatch(productActions.loadingAllProductsIntoStore());
   }
 
   onSave() {
-    this.productSrv.saveProduct(this.product).subscribe((res: any) => {
+    /*this.productSrv.saveProduct(this.product).subscribe((res: any) => {
       if (res.result) {
         alert('Product Created');
         this.getProducts();
       } else {
         alert(res.message);
       }
-    });
+    });*/
   }
 
   openSidePanel() {
@@ -69,31 +67,29 @@ export class ProductsComponent implements OnInit {
   }
 
   onSelect(product: Product): void {
-    //console.log(product);
-    //alert("onSelect");
-    this.store.dispatch(setSelectedProduct({product: product}));
+    this.store.dispatch(productActions.setSelectedProduct({product: product}));
     this.router.navigate(['/productdetails']);
   }
 
   onEdit(product: any) {
-    this.productSrv.updateProduct(product).subscribe((res: any) => {
+    /*this.productSrv.updateProduct(product).subscribe((res: any) => {
       if (res.result) {
         alert('Product Created');
         this.getProducts();
       } else {
         alert(res.message);
       }
-    });
+    });*/
   }
 
   onDelete(Id: any) {
-    this.productSrv.deleteProduct(Id).subscribe((res: any) => {
+    /*this.productSrv.deleteProduct(Id).subscribe((res: any) => {
       if (res.result) {
         alert('Product Created');
         this.getProducts();
       } else {
         alert(res.message);
       }
-    });
+    });*/
   }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Constant } from '../constant/constant';
 import { Observable } from 'rxjs';
+import { Product } from '../../products/product';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +17,11 @@ export class ProductService {
   }
 
   //getProducts(): Observable<{data: any[]}> {
-  getProducts() {
+  getProducts(): Observable<{productList: Product[]}> {
     //return this.http.get(Constant.API_END_POINT + Constant.METHODS.GET_ALL_PRODUCT) as Observable<{data: any[]}>;
     return this.http.get(
       Constant.API_END_POINT + Constant.METHODS.GET_ALL_PRODUCT
-    );
+    ) as Observable<{productList: Product[]}>;
   }
 
   saveProduct(obj: any):Observable<any> {

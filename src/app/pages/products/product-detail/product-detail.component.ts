@@ -5,9 +5,9 @@ import { Product } from '../product';
 import { NavigationExtras, Router } from '@angular/router';
 import { AppState } from "../../../store/app-state";
 import { select, Store } from "@ngrx/store";
-import { selectProduct } from "../store/product/product.selectors";
+import { selectedProduct } from "../store/product/product.selectors";
 import { filter, first, map, Observable, take, tap } from "rxjs";
-import { setSelectedProduct } from '../store/product/product.action';
+import { productActions } from '../store/product/product.action';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,7 +19,7 @@ import { setSelectedProduct } from '../store/product/product.action';
 export class ProductDetailComponent implements OnInit {
   @Input() product?: Product;
   selectedProduct?: Product;
-  counter$ = this.store.select(selectProduct);
+  selectProduct$ = this.store.select(selectedProduct);
 
 
   constructor(
@@ -55,8 +55,11 @@ export class ProductDetailComponent implements OnInit {
 
  
   ngOnInit(): void {
+    /*this.selectProduct$.subscribe(obg=>{
+      console.log(obg);
+    });*/
     
-     this.counter$.subscribe(obg=>{
+     this.selectProduct$.subscribe(obg=>{
       this.form.controls.categoryId.setValue(obg?.categoryId! as any);
       this.form.controls.Sku.setValue(obg?.productSku ?? "");
       this.form.controls.productName.setValue(obg?.productName ?? "");

@@ -1,24 +1,38 @@
-import { Action, createReducer, on } from "@ngrx/store"
+import { Action, createFeature, createReducer, on } from "@ngrx/store"
 import { Product } from "../../product";
-import { setSelectedProduct } from "./product.action";
+import { productActions } from "./product.action";
 
 //export const productFeatureKey: "product" = 'product';
-export const productFeatureKey = 'product';
+//export const productsFeatureKey = 'product';
 
 
 export interface ProductState{
-    selectedProduct: Product | null
+    selectedProduct: Product | null,
+    productList: Product[] | null
 }
 
 const initialState: ProductState = {
-    selectedProduct: null
+    selectedProduct: null,
+    productList: null
 };
 
-export const reduser = createReducer(
+const productFeature = createFeature({
+  name: 'product',
+  reducer: createReducer(
     initialState,
-    on(setSelectedProduct, (state, action) => ({...state, selectedProduct: action.product })),
-);
+    on(productActions.setSelectedProduct, (state, action) => ({
+      ...state, 
+      selectedProduct: action.product 
+    })),
+    on(productActions.loadingAllProductsIntoStoreSuccess, (state, {productList}) => ({
+      ...state,
+      productList
+    })),
+  )
+})
 
-export function productReducer(state: ProductState | undefined, action: Action){
-    return reduser (state, action);
-}
+export const {
+  name: productFeatureKey, 
+  reducer: productReducer,
+  //selectSelectedProduct
+} = productFeature
