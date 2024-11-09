@@ -5,19 +5,19 @@ import { ProductService } from '../../../services/product/product.service';
 import * as fromProductAcctions from '../product/product.action';
 
 
-export const loadingAllProductsIntoStoreEffect = createEffect((
+export const loadProductsEffect = createEffect((
   actions$ = inject(Actions),
   productService = inject(ProductService)
   )=> {
     return actions$.pipe(
-      ofType(fromProductAcctions.productActions.loadingAllProductsIntoStore),
+      ofType(fromProductAcctions.productActions.loadProducts),
       switchMap(() => {
         return productService.getProducts().pipe(
           map((res: any) => {
-            return fromProductAcctions.productActions.loadingAllProductsIntoStoreSuccess({ productList: res })
+            return fromProductAcctions.productActions.loadProductsSuccess({ productList: res })
           }),
-          catchError(() => {
-            return of(fromProductAcctions.productActions.loadingAllProductsIntoStoreFailure())
+          catchError((error) => {
+            return of(fromProductAcctions.productActions.loadProductsFailure({ error }))
           })
         )
       })
@@ -38,8 +38,8 @@ export const updateProductEffect = createEffect((
             //return of(fromProductAcctions.productActions.updateProductSuccess())
             return fromProductAcctions.productActions.updateProductSuccess()
           }),
-          catchError(() => {
-            return of(fromProductAcctions.productActions.updateProductFailure())
+          catchError((error) => {
+            return of(fromProductAcctions.productActions.updateProductFailure( {error} ))
           })
         )
       })
@@ -48,8 +48,51 @@ export const updateProductEffect = createEffect((
     {functional: true}
   );
 
+  export const createProductEffect = createEffect((
+    actions$ = inject(Actions),
+    productService = inject(ProductService)
+    )=>{
+      return actions$.pipe(
+        ofType(fromProductAcctions.productActions.createProduct),
+        switchMap((product) => {
+          return productService.createProduct(product.product).pipe(
+            map((res: any) => {
+              //return of(fromProductAcctions.productActions.updateProductSuccess())
+              return fromProductAcctions.productActions.createProductSuccess()
+            }),
+            catchError((error) => {
+              return of(fromProductAcctions.productActions.createProductFailure( {error} ))
+            })
+          )
+        })
+       )
+      }, 
+      {functional: true}
+    );
+
+    export const deleteProductEffect = createEffect((
+      actions$ = inject(Actions),
+      productService = inject(ProductService)
+      )=>{
+        return actions$.pipe(
+          ofType(fromProductAcctions.productActions.deleteProduct),
+          switchMap((product) => {
+            return productService.deleteProduct(product.productId).pipe(
+              map((res: any) => {
+                return fromProductAcctions.productActions.deleteProductSuccess()
+              }),
+              catchError((error) => {
+                return of(fromProductAcctions.productActions.deleteProductFailure( {error} ))
+              })
+            )
+          })
+         )
+        }, 
+        {functional: true}
+      );
+
  
-  export const updateProductSuccess = createEffect((
+  /*export const updateProductSuccess = createEffect((
       actions$ = inject(Actions)
       ) => {
         return actions$.pipe(
@@ -61,7 +104,7 @@ export const updateProductEffect = createEffect((
       );
     },
     { functional: true, dispatch: true }
-  );
+  );*/
 
    
 

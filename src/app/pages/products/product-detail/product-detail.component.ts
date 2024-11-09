@@ -8,6 +8,7 @@ import { select, Store } from "@ngrx/store";
 import { selectedProduct } from "../store/product/product.selectors";
 import { filter, first, map, Observable, take, tap } from "rxjs";
 import { productActions } from '../store/product/product.action';
+import { Action } from '../action'
 
 @Component({
   selector: 'app-product-detail',
@@ -21,6 +22,8 @@ export class ProductDetailComponent implements OnInit {
   //selectedProduct?: Product;
   selectProduct$ = this.store.select(selectedProduct);
   productId: string  = '';
+  action: Action = Action.None;
+  
 
 
   constructor(
@@ -61,17 +64,21 @@ export class ProductDetailComponent implements OnInit {
     });*/
     
      this.selectProduct$.subscribe(obg=>{
-      this.productId = obg?.id as string;
-      this.form.controls.categoryId.setValue(obg?.categoryId! as any);
-      this.form.controls.Sku.setValue(obg?.productSku ?? "");
-      this.form.controls.productName.setValue(obg?.productName ?? "");
-      this.form.controls.productPrice.setValue(obg?.productPrice! as any);
-      this.form.controls.productShortName.setValue(obg?.productShortName ?? "");
-      this.form.controls.productDescription.setValue(obg?.productDescription ?? "");
-      this.form.controls.productImageUrl.setValue(obg?.productImageUrl ?? "");
-     
+      if(typeof obg!='undefined' && obg){
+        this.productId = obg?.id as string;
+        this.form.controls.categoryId.setValue(obg?.categoryId! as any);
+        this.form.controls.Sku.setValue(obg?.productSku ?? "");
+        this.form.controls.productName.setValue(obg?.productName ?? "");
+        this.form.controls.productPrice.setValue(obg?.productPrice! as any);
+        this.form.controls.productShortName.setValue(obg?.productShortName ?? "");
+        this.form.controls.productDescription.setValue(obg?.productDescription ?? "");
+        this.form.controls.productImageUrl.setValue(obg?.productImageUrl ?? "");
+      }
+      else
+        this.action = Action.Create;
     });
      
+    console.log(this.action);
   }
 
   get productNameIsInvalid(){
@@ -105,8 +112,31 @@ export class ProductDetailComponent implements OnInit {
       userId: this.form?.value.categoryId! as any,
     }
 
-    this.store.dispatch(productActions.updateProduct({ product: product}));
+    switch (this.action) {
+      case Action.Create:
+            this.store.dispatch(productActions.createProduct({ product: product}));
+          break;
+      case Action.Update:
+          this.store.dispatch(productActions.updateProduct({ product: product}));
+          break;
+      case Action.Delete:
+        this.store.dispatch(productActions.deleteProduct({ productId: product.id}));
+          break;
+      default:
+          throw new Error("unsupported country");
+  }
+   
     this.router.navigate(['/products']);
+
+    console.log(this.action);
+  }
+
+  public onUpdateClick(): void {
+    this.action = Action.Update;
+  }
+
+  public onDeleteClick(): void {
+    this.action = Action.Delete;
   }
 
 }

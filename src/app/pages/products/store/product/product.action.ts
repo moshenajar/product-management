@@ -29,17 +29,21 @@ export const productActions = createActionGroup({
     resetProduct: emptyProps(),
     setSelectedProduct: props<{ product:Product }>(),
 
-    LoadingAllProductsIntoStore: emptyProps(),
-    'LoadingAllProductsIntoStore success': props<{ productList: Product[] }>(),
-    'LoadingAllProductsIntoStore failure': emptyProps(),
+    loadProducts : emptyProps(),
+    'loadProducts success': props<{ productList: Product[] }>(),
+    'loadProducts Failure': props<{ error: any }>(), 
 
     UpdateProduct: props<{ product: Product}>(),
     'UpdateProduct success': emptyProps(),
-    'UpdateProduct failure': emptyProps(),
+    'UpdateProduct failure': props<{ error: any }>(), 
 
     CreateProduct: props<{ product: Product}>(),
     'CreateProduct success': emptyProps(),
-    'CreateProduct failure': emptyProps(),
+    'CreateProduct failure': props<{ error: any }>(),
+
+    DeleteProduct: props<{ productId: string}>(),
+    'DeleteProduct success': emptyProps(),
+    'DeleteProduct failure': props<{ error: any }>(),
   },
 })
 

@@ -65,8 +65,7 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts() {
-    console.log('loadingAllProductsIntoStore');
-    this.store.dispatch(productActions.loadingAllProductsIntoStore());
+    this.store.dispatch(productActions.loadProducts());
   }
 
   onSave() {
@@ -80,16 +79,20 @@ export class ProductsComponent implements OnInit {
     });*/
   }
 
-  openSidePanel() {
+  /*openSidePanel() {
     this.isSidePanelVisible = true;
   }
 
   closeSidePanel() {
     this.isSidePanelVisible = false;
-  }
+  }*/
 
   onSelect(product: Product): void {
     this.store.dispatch(productActions.setSelectedProduct({product: product}));
+    this.router.navigate(['/productdetails']);
+  }
+
+  onCreate(): void {
     this.router.navigate(['/productdetails']);
   }
 

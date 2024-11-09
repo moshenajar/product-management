@@ -32,26 +32,28 @@
 
       <div class="control-row">
         <div class="control no-marging">
-          <label for="product-short-name">Product price: </label>
+          <label for="product-short-name">Product Short Name: </label>
           <input id="product-short-name" type="text" formControlName="productShortName" placeholder="productShortName"> 
         </div>
       </div>
 
       <div class="control-row">
         <div class="control no-marging">
-          <label for="product-description">Product price: </label>
+          <label for="product-description">Product Description: </label>
           <input id="product-description" type="text" formControlName="productDescription" placeholder="productDescription"> 
         </div>
       </div>
 
       <div class="control-row">
         <div class="control no-marging">
-          <label for="product-imageUrl">Product price: </label>
+          <label for="product-imageUrl">Product ImageUrl </label>
           <input id="product-imageUrl" type="text" formControlName="productImageUrl" placeholder="productImageUrl"> 
         </div>
       </div>
 
-      <button class="button">עדכון</button>
+      <button class="button" *ngIf="action !== 2" (click)="onUpdateClick()">לְעַדְכֵּן</button>
+      <button class="button" *ngIf="action !== 2" (click)="onDeleteClick()">לִמְחוֹק</button>
+      <button class="button" *ngIf="action === 2">לִיצוֹר</button>
 
       @if (productNameIsInvalid) {
         <p class="control-error">Please enter a valid product name</p>

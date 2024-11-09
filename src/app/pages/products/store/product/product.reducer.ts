@@ -29,9 +29,30 @@ const productFeature = createFeature({
       ...state, 
       selectedProduct: action.product 
     })),
-    on(productActions.loadingAllProductsIntoStoreSuccess, (state, {productList}) => ({
+    on(productActions.loadProducts, (state) => ({
       ...state,
-      productList
+      productList: null,
+      selectedProduct: null
+    })),
+    on(productActions.loadProductsSuccess, (state, {productList}) => ({
+      ...state,
+      productList,
+      selectedProduct: null
+    })),
+    on(productActions.loadProductsFailure, (state, { error }) => ({
+      ...state,
+      productList: null,
+      selectedProduct: null
+    })),
+    on(productActions.updateProductSuccess, (state) => ({
+      ...state,
+      productList: null,
+      selectedProduct: null
+    })),
+    on(productActions.updateProductFailure, (state, { error }) => ({
+      ...state,
+      productList: null,
+      selectedProduct: null
     })),
   )
 })

@@ -24,7 +24,7 @@ export class ProductService {
     ) as Observable<{productList: Product[]}>;
   }
 
-  saveProduct(obj: any):Observable<any> {
+  createProduct(obj: any):Observable<any> {
     return this.http.post(
       Constant.API_END_POINT + Constant.METHODS.CREATE_PRODUCT,
       obj
@@ -40,7 +40,7 @@ export class ProductService {
 
   deleteProduct(Id: any) {
     return this.http.delete(
-      Constant.API_END_POINT + Constant.METHODS.UPDATE_PRODUCT + Id
+      Constant.API_END_POINT + Constant.METHODS.DELETE_PRODUCT + Id
     );
   }
 }
