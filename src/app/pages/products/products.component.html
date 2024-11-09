@@ -21,7 +21,7 @@
                                 <h4 class="card-title">{{product.productName}}</h4>
                                 <h4 class="card-title">{{product.productPrice}}</h4>
                                 <a class="btn btn-primary" (click)="onSelect(product)">Select</a>
-                                <!-- #region <a href="#" class="btn btn-primary" (click)="onDelete(product.Id)">Delete</a>-->
+                                <!-- #region <a href="#" class="btn btn-primary" (click)="onDelete(product.id)">Delete</a>-->
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
             <div *ngIf="selectedProduct">
 
                 <h2>{{selectedProduct.productName| uppercase}} Details</h2>
-                <div><span>id: </span>{{selectedProduct.Id}}</div>
+                <div><span>id: </span>{{selectedProduct.id}}</div>
                 <div>
                   <label for="product-name">Product name: </label>
                   <input id="product-name" [(ngModel)]="selectedProduct.productName" placeholder="productName">

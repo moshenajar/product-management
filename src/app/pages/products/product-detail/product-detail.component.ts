@@ -17,9 +17,10 @@ import { productActions } from '../store/product/product.action';
   imports: [NgIf, UpperCasePipe, ReactiveFormsModule],
 })
 export class ProductDetailComponent implements OnInit {
-  @Input() product?: Product;
-  selectedProduct?: Product;
+  //@Input() product?: Product;
+  //selectedProduct?: Product;
   selectProduct$ = this.store.select(selectedProduct);
+  productId: string  = '';
 
 
   constructor(
@@ -60,6 +61,7 @@ export class ProductDetailComponent implements OnInit {
     });*/
     
      this.selectProduct$.subscribe(obg=>{
+      this.productId = obg?.id as string;
       this.form.controls.categoryId.setValue(obg?.categoryId! as any);
       this.form.controls.Sku.setValue(obg?.productSku ?? "");
       this.form.controls.productName.setValue(obg?.productName ?? "");
@@ -89,10 +91,22 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.form);
-    const enteredProductName = this.form.value.productName;
-    const enteredProductPrice = this.form.value.productPrice;
-    console.log(enteredProductName, enteredProductPrice);
+    const product: Product = {
+      id: this.productId,
+      productSku: this.form?.value.Sku ?? "",
+      productName: this.form?.value.productName ?? "",
+      productPrice: this.form?.value.productPrice! as any,
+      productShortName: this.form?.value.productShortName ?? "",
+      productDescription: this.form?.value.productDescription ?? "",
+      createdDate: new Date(),
+      deliveryTimeSpan: this.form?.value.productDescription ?? "",
+      categoryId: this.form?.value.categoryId! as any,
+      productImageUrl: this.form?.value.productImageUrl ?? "",
+      userId: this.form?.value.categoryId! as any,
+    }
+
+    this.store.dispatch(productActions.updateProduct({ product: product}));
+    this.router.navigate(['/products']);
   }
 
 }

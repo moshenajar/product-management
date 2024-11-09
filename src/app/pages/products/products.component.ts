@@ -30,10 +30,31 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private productSrv: ProductService
   ) {}
 
   ngOnInit(): void {
+   /* const product: Product =  {
+      id: "6706833080c16766d3c5eba9",
+      productSku: "abc45",
+      productName: "pttaghobhi",
+      productPrice: 111,
+      productShortName: "xyz",
+      productDescription: "bjwhdgchdevhjc",
+      createdDate: new Date,
+      deliveryTimeSpan: "1-3 days",
+      categoryId: 55,
+      productImageUrl: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSlSmMQmoGhFnckZYMqmw7jMfr6xdBRVHpsd-PrU0D1UFa3_NB0",
+      userId: 0
+    }
+   
+     
+    
+
+    this.productSrv.updateProduct(product).subscribe((res:any)=>{
+      //this.categoryList = res;
+    });*/
     this.getProducts();
   }
 
@@ -44,6 +65,7 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts() {
+    console.log('loadingAllProductsIntoStore');
     this.store.dispatch(productActions.loadingAllProductsIntoStore());
   }
 

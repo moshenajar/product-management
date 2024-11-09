@@ -26,24 +26,43 @@ export const loadingAllProductsIntoStoreEffect = createEffect((
   {functional: true}
 );
 
-/*export const updateProductEffect = createEffect((
+export const updateProductEffect = createEffect((
   actions$ = inject(Actions),
   productService = inject(ProductService)
   )=>{
     return actions$.pipe(
       ofType(fromProductAcctions.productActions.updateProduct),
-      switchMap(() => {
-        return productService.updateProduct().pipe(
+      switchMap((product) => {
+        return productService.updateProduct(product.product).pipe(
           map((res: any) => {
-            return fromProductAcctions.productActions.updateProductSuccess(fromProductAcctions.productActions.loadingAllProductsIntoStore))
+            //return of(fromProductAcctions.productActions.updateProductSuccess())
+            return fromProductAcctions.productActions.updateProductSuccess()
           }),
           catchError(() => {
-            return of(fromProductAcctions.productActions.loadingAllProductsIntoStoreFailure())
+            return of(fromProductAcctions.productActions.updateProductFailure())
           })
         )
-      },
+      })
+     )
+    }, 
     {functional: true}
-  );*/
+  );
+
+ 
+  export const updateProductSuccess = createEffect((
+      actions$ = inject(Actions)
+      ) => {
+        return actions$.pipe(
+        ofType(fromProductAcctions.productActions.updateProductSuccess),
+        //tap(_ => console.log('app effect started polling')),
+        map((res: any) => {
+          return fromProductAcctions.productActions.resetProduct()
+        })
+      );
+    },
+    { functional: true, dispatch: true }
+  );
+
    
 
 /*export const updateProductEffect = createEffect((

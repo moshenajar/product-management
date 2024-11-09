@@ -1,6 +1,7 @@
 import { Action, createFeature, createReducer, on } from "@ngrx/store"
 import { Product } from "../../product";
 import { productActions } from "./product.action";
+import { state } from "@angular/animations";
 
 //export const productFeatureKey: "product" = 'product';
 //export const productsFeatureKey = 'product';
@@ -20,6 +21,10 @@ const productFeature = createFeature({
   name: 'product',
   reducer: createReducer(
     initialState,
+    on(productActions.resetProduct, (state) => ({
+      selectedProduct: null,
+      productList: null
+    })),
     on(productActions.setSelectedProduct, (state, action) => ({
       ...state, 
       selectedProduct: action.product 

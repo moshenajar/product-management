@@ -26,6 +26,7 @@ export const updateAllProducts = createAction(
 export const productActions = createActionGroup({
   source: 'product',
   events: {
+    resetProduct: emptyProps(),
     setSelectedProduct: props<{ product:Product }>(),
 
     LoadingAllProductsIntoStore: emptyProps(),
@@ -35,6 +36,10 @@ export const productActions = createActionGroup({
     UpdateProduct: props<{ product: Product}>(),
     'UpdateProduct success': emptyProps(),
     'UpdateProduct failure': emptyProps(),
+
+    CreateProduct: props<{ product: Product}>(),
+    'CreateProduct success': emptyProps(),
+    'CreateProduct failure': emptyProps(),
   },
 })
 
