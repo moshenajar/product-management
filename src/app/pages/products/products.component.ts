@@ -9,6 +9,9 @@ import { AppState } from '../../store/app-state';
 import { Store } from "@ngrx/store";
 import { productActions } from "../products/store/product/product.action";
 import { selectProducts } from './store/product/product.selectors';
+import { environment } from '../../../environments/environment';
+import { map } from 'rxjs';
+
 
 @Component({
   selector: 'app-products',
@@ -35,27 +38,13 @@ export class ProductsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-   /* const product: Product =  {
-      id: "6706833080c16766d3c5eba9",
-      productSku: "abc45",
-      productName: "pttaghobhi",
-      productPrice: 111,
-      productShortName: "xyz",
-      productDescription: "bjwhdgchdevhjc",
-      createdDate: new Date,
-      deliveryTimeSpan: "1-3 days",
-      categoryId: 55,
-      productImageUrl: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSlSmMQmoGhFnckZYMqmw7jMfr6xdBRVHpsd-PrU0D1UFa3_NB0",
-      userId: 0
-    }
    
-     
-    
-
-    this.productSrv.updateProduct(product).subscribe((res:any)=>{
-      //this.categoryList = res;
-    });*/
-    this.getProducts();
+    /*if(environment.isStubs === true )
+      {
+        this.getProducts();
+      }
+    else if( environment.isStubs === false )*/
+      this.getProducts();
   }
 
   getAllCategory() {
@@ -65,7 +54,8 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts() {
-    this.store.dispatch(productActions.loadProducts());
+    //if(environment.env != 'staging')
+      this.store.dispatch(productActions.loadProducts());
   }
 
   onSave() {

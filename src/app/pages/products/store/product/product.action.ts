@@ -37,6 +37,8 @@ export const productActions = createActionGroup({
     'UpdateProduct success': emptyProps(),
     'UpdateProduct failure': props<{ error: any }>(), 
 
+    updateProductStore: props<{ product: Product}>(), 
+
     CreateProduct: props<{ product: Product}>(),
     'CreateProduct success': emptyProps(),
     'CreateProduct failure': props<{ error: any }>(),

@@ -8,7 +8,10 @@ import { select, Store } from "@ngrx/store";
 import { selectedProduct } from "../store/product/product.selectors";
 import { filter, first, map, Observable, take, tap } from "rxjs";
 import { productActions } from '../store/product/product.action';
-import { Action } from '../action'
+import { Action } from '../action';
+import { environment } from '../../../../environments/environment';
+
+
 
 @Component({
   selector: 'app-product-detail',
@@ -98,6 +101,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onSubmit(){
+    if(environment.isStubs === true && this.action === Action.Create )
+      {
+        this.productId = "6706833080c16766d3c5eba9";
+      }
     const product: Product = {
       id: this.productId,
       productSku: this.form?.value.Sku ?? "",
@@ -117,6 +124,7 @@ export class ProductDetailComponent implements OnInit {
             this.store.dispatch(productActions.createProduct({ product: product}));
           break;
       case Action.Update:
+          console.log(product);
           this.store.dispatch(productActions.updateProduct({ product: product}));
           break;
       case Action.Delete:

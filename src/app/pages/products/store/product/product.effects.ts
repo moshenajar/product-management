@@ -1,16 +1,26 @@
 import { inject } from '@angular/core';
-import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
+import { catchError, exhaustMap, filter, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductService } from '../../../services/product/product.service';
 import * as fromProductAcctions from '../product/product.action';
+import * as fromProductReducer from '../product/product.reducer';
+import { selectProducts } from '../product/product.selectors';
+import { env } from 'process';
+import { environment } from '../../../../../environments/environment';
+import { Product } from '../../product'
+import { AppState } from '../../../../store/app-state'
+import { Store } from '@ngrx/store';
 
 
 export const loadProductsEffect = createEffect((
   actions$ = inject(Actions),
+  store = inject(Store),
   productService = inject(ProductService)
   )=> {
     return actions$.pipe(
       ofType(fromProductAcctions.productActions.loadProducts),
+      withLatestFrom( store.select(selectProducts)),
+      filter(([action, productsList]) => !productsList || !productsList.length),
       switchMap(() => {
         return productService.getProducts().pipe(
           map((res: any) => {
@@ -33,6 +43,15 @@ export const updateProductEffect = createEffect((
     return actions$.pipe(
       ofType(fromProductAcctions.productActions.updateProduct),
       switchMap((product) => {
+        if(environment.env = 'staging')
+          {
+            return productService.tmp(product.product).pipe(
+              map((res: any) => {
+                console.log(res,product.product);
+                return fromProductAcctions.productActions.updateProductStore({ product: product.product})
+              })
+            )
+        }
         return productService.updateProduct(product.product).pipe(
           map((res: any) => {
             //return of(fromProductAcctions.productActions.updateProductSuccess())
@@ -42,6 +61,7 @@ export const updateProductEffect = createEffect((
             return of(fromProductAcctions.productActions.updateProductFailure( {error} ))
           })
         )
+
       })
      )
     }, 
@@ -57,7 +77,6 @@ export const updateProductEffect = createEffect((
         switchMap((product) => {
           return productService.createProduct(product.product).pipe(
             map((res: any) => {
-              //return of(fromProductAcctions.productActions.updateProductSuccess())
               return fromProductAcctions.productActions.createProductSuccess()
             }),
             catchError((error) => {
@@ -92,7 +111,7 @@ export const updateProductEffect = createEffect((
       );
 
  
-  /*export const updateProductSuccess = createEffect((
+  export const updateProductSuccess = createEffect((
       actions$ = inject(Actions)
       ) => {
         return actions$.pipe(
@@ -104,7 +123,7 @@ export const updateProductEffect = createEffect((
       );
     },
     { functional: true, dispatch: true }
-  );*/
+  );
 
    
 

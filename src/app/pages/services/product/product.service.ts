@@ -1,46 +1,63 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Constant } from '../constant/constant';
-import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment'
+import { map, Observable } from 'rxjs';
 import { Product } from '../../products/product';
+import { selectProducts } from '../../products/store/product/product.selectors';
+import { AppState } from '../../../store/app-state';
+import { Store } from "@ngrx/store";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private http: HttpClient) {}
+  productList$ = this.store.select(selectProducts);
+  constructor(
+    private http: HttpClient,
+    private store: Store<AppState>,) {}
 
   getCategory() {
     return this.http.get(
-      Constant.API_END_POINT + Constant.METHODS.GET_ALL_CATEGORY
+      environment.API_END_POINT + environment.METHODS.GET_ALL_CATEGORY
     );
   }
 
-  //getProducts(): Observable<{data: any[]}> {
   getProducts(): Observable<{productList: Product[]}> {
-    //return this.http.get(Constant.API_END_POINT + Constant.METHODS.GET_ALL_PRODUCT) as Observable<{data: any[]}>;
     return this.http.get(
-      Constant.API_END_POINT + Constant.METHODS.GET_ALL_PRODUCT
+      environment.API_END_POINT + environment.METHODS.GET_ALL_PRODUCT
     ) as Observable<{productList: Product[]}>;
   }
 
-  createProduct(obj: any):Observable<any> {
+  createProduct(obj: Product):Observable<any> {
     return this.http.post(
-      Constant.API_END_POINT + Constant.METHODS.CREATE_PRODUCT,
+      environment.API_END_POINT + environment.METHODS.CREATE_PRODUCT,
       obj
     );
   }
 
   updateProduct(obj: any) {
     return this.http.put(
-      Constant.API_END_POINT + Constant.METHODS.UPDATE_PRODUCT,
+      environment.API_END_POINT + environment.METHODS.UPDATE_PRODUCT,
       obj
     );
   }
 
   deleteProduct(Id: any) {
     return this.http.delete(
-      Constant.API_END_POINT + Constant.METHODS.DELETE_PRODUCT + Id
+      environment.API_END_POINT + environment.METHODS.DELETE_PRODUCT + Id
     );
+  }
+
+  tmp(obj: any){
+    return new Observable(observer => {  
+      fetch(environment.API_END_POINT + environment.METHODS.GET_ALL_PRODUCT)  
+        .then(response => response.json())  
+        .then(pikachu => {
+          observer.next(pikachu);  
+          observer.complete();  
+        })  
+        .catch(err => observer.error(err)) 
+    });
   }
 }

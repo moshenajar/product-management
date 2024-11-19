@@ -9,12 +9,14 @@ import { state } from "@angular/animations";
 
 export interface ProductState{
     selectedProduct: Product | null,
-    productList: Product[] | null
+    //productList: Product[] | null
+    productList: Product[]
 }
 
 const initialState: ProductState = {
     selectedProduct: null,
-    productList: null
+    //productList: null
+    productList: []
 };
 
 const productFeature = createFeature({
@@ -23,7 +25,7 @@ const productFeature = createFeature({
     initialState,
     on(productActions.resetProduct, (state) => ({
       selectedProduct: null,
-      productList: null
+      productList: []
     })),
     on(productActions.setSelectedProduct, (state, action) => ({
       ...state, 
@@ -31,7 +33,7 @@ const productFeature = createFeature({
     })),
     on(productActions.loadProducts, (state) => ({
       ...state,
-      productList: null,
+      //productList: [],
       selectedProduct: null
     })),
     on(productActions.loadProductsSuccess, (state, {productList}) => ({
@@ -41,17 +43,22 @@ const productFeature = createFeature({
     })),
     on(productActions.loadProductsFailure, (state, { error }) => ({
       ...state,
-      productList: null,
+      productList: [],
       selectedProduct: null
     })),
     on(productActions.updateProductSuccess, (state) => ({
       ...state,
-      productList: null,
+      productList: [],
       selectedProduct: null
     })),
     on(productActions.updateProductFailure, (state, { error }) => ({
       ...state,
-      productList: null,
+      productList: [],
+      selectedProduct: null
+    })),
+    on(productActions.createProduct, (state, { product }) => ({
+      ...state,
+      productList: [...state.productList, product],
       selectedProduct: null
     })),
   )
