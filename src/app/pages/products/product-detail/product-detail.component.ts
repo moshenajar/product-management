@@ -10,6 +10,7 @@ import { filter, first, map, Observable, take, tap } from "rxjs";
 import { productActions } from '../store/product/product.action';
 import { Action } from '../action';
 import { environment } from '../../../../environments/environment';
+import {Breakpoints} from '@angular/cdk/layout';
 
 
 
@@ -62,6 +63,24 @@ export class ProductDetailComponent implements OnInit {
 
  
   ngOnInit(): void {
+
+    console.log('Web ' + Breakpoints.Web);
+console.log('WebLandscape ' + Breakpoints.WebLandscape);
+console.log('WebPortrait ' + Breakpoints.WebPortrait);
+
+console.log('Tablet ' + Breakpoints.Tablet);
+console.log('TabletPortrait ' + Breakpoints.TabletPortrait);
+console.log('TabletLandscape ' + Breakpoints.TabletLandscape);
+
+console.log('Handset ' + Breakpoints.Handset);
+console.log('HandsetLandscape ' + Breakpoints.HandsetLandscape);
+console.log('HandsetPortrait ' + Breakpoints.HandsetPortrait);
+
+console.log('XSmall ' + Breakpoints.XSmall);
+console.log('Small ' + Breakpoints.Small);
+console.log('Medium ' + Breakpoints.Medium);
+console.log('Large ' + Breakpoints.Large);
+console.log('XLarge ' + Breakpoints.XLarge);
     /*this.selectProduct$.subscribe(obg=>{
       console.log(obg);
     });*/
@@ -102,9 +121,8 @@ export class ProductDetailComponent implements OnInit {
 
   onSubmit(){
     if(environment.isStubs === true && this.action === Action.Create )
-      {
-        this.productId = "6706833080c16766d3c5eba9";
-      }
+        this.productId = this.newObjectId();
+      
     const product: Product = {
       id: this.productId,
       productSku: this.form?.value.Sku ?? "",
@@ -124,7 +142,7 @@ export class ProductDetailComponent implements OnInit {
             this.store.dispatch(productActions.createProduct({ product: product}));
           break;
       case Action.Update:
-          console.log(product);
+          //console.log(product);
           this.store.dispatch(productActions.updateProduct({ product: product}));
           break;
       case Action.Delete:
@@ -146,5 +164,18 @@ export class ProductDetailComponent implements OnInit {
   public onDeleteClick(): void {
     this.action = Action.Delete;
   }
+
+  newObjectId() {
+    
+    const timestamp = Math.floor(new Date().getTime() / 1000).toString(16);
+    const objectId = timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => {
+        return Math.floor(Math.random() * 16).toString(16);
+    }).toLowerCase();
+
+    console.log("objectId:" + objectId);
+
+    return objectId;
+  }
+
 
 }

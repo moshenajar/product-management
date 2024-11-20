@@ -24,12 +24,14 @@ export class ProductService {
   }
 
   getProducts(): Observable<{productList: Product[]}> {
+    console.log("call getProducts service");
     return this.http.get(
       environment.API_END_POINT + environment.METHODS.GET_ALL_PRODUCT
     ) as Observable<{productList: Product[]}>;
   }
 
   createProduct(obj: Product):Observable<any> {
+    console.log("create service: createProduct");
     return this.http.post(
       environment.API_END_POINT + environment.METHODS.CREATE_PRODUCT,
       obj
@@ -49,7 +51,7 @@ export class ProductService {
     );
   }
 
-  tmp(obj: any){
+/*  tmp(obj: any){
     return new Observable(observer => {  
       fetch(environment.API_END_POINT + environment.METHODS.GET_ALL_PRODUCT)  
         .then(response => response.json())  
@@ -59,5 +61,5 @@ export class ProductService {
         })  
         .catch(err => observer.error(err)) 
     });
-  }
+  }*/
 }

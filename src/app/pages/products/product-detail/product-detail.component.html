@@ -1,59 +1,56 @@
 <!-- #region  <div *ngIf="product" > -->
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="myForm">
       <!--<h2>{{product.productName| uppercase}} Details</h2> -->
+      <ul class="wrapper">
 
-      <div class="control-row">
-        <div class="control no-marging">
+      
+        <li class="form-row">
           <label for="category-id">categoryId: </label>
           <input id="category-id" type="text" formControlName="categoryId" placeholder="categoryId"> 
-        </div>
-      </div>
+        </li>
 
-      <div class="control-row">
-        <div class="control no-marging">
+        <li class="form-row">
           <label for="sku">sku: </label>
           <input id="sku" type="text" formControlName="Sku" placeholder="Sku"> 
-        </div>
-      </div>
+        </li>
+      
 
-      <div class="control-row">
-        <div class="control no-marging">
+        <li class="form-row">
           <label for="product-name">Product name: </label>
           <input id="product-name" type="text" formControlName="productName" placeholder="productName"> 
-        </div>
-      </div>
+        </li>
 
-      <div class="control-row">
-        <div class="control no-marging">
+        <li class="form-row">
           <label for="product-price">Product price: </label>
           <input id="product-price" type="text" formControlName="productPrice" placeholder="productPrice"> 
-        </div>
-      </div>
+        </li>
 
-      <div class="control-row">
-        <div class="control no-marging">
+        <li class="form-row">
           <label for="product-short-name">Product Short Name: </label>
           <input id="product-short-name" type="text" formControlName="productShortName" placeholder="productShortName"> 
-        </div>
-      </div>
+        </li>
 
-      <div class="control-row">
-        <div class="control no-marging">
+        <li class="form-row">
           <label for="product-description">Product Description: </label>
           <input id="product-description" type="text" formControlName="productDescription" placeholder="productDescription"> 
-        </div>
-      </div>
+        </li>
+     
 
-      <div class="control-row">
-        <div class="control no-marging">
+        <li class="form-row">
           <label for="product-imageUrl">Product ImageUrl </label>
           <input id="product-imageUrl" type="text" formControlName="productImageUrl" placeholder="productImageUrl"> 
-        </div>
-      </div>
+        </li>
 
-      <button class="button" *ngIf="action !== 2" (click)="onUpdateClick()">לְעַדְכֵּן</button>
-      <button class="button" *ngIf="action !== 2" (click)="onDeleteClick()">לִמְחוֹק</button>
-      <button class="button" *ngIf="action === 2">לִיצוֹר</button>
+
+      
+
+        <li class="form-row">
+
+          <button class="button" *ngIf="action !== 2" (click)="onUpdateClick()">לְעַדְכֵּן</button>
+          <button class="button" *ngIf="action !== 2" (click)="onDeleteClick()">לִמְחוֹק</button>
+          <button class="button" *ngIf="action === 2">לִיצוֹר</button>
+
+        </li>
 
       @if (productNameIsInvalid) {
         <p class="control-error">Please enter a valid product name</p>
@@ -63,6 +60,6 @@
         <p class="control-error">Please enter a valid product price</p>
       }
       
-
+    </ul>
     </form>
 <!-- #region  </div>-->

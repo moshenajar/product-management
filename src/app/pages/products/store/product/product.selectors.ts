@@ -6,9 +6,9 @@ const selectProductFeature = createFeatureSelector<fromProduct.ProductState>(
     fromProduct.productFeatureKey
 );
 
-export const selectProduct = createSelector(
+export const selectIsLoadProductsfromFile = createSelector(
     selectProductFeature, 
-    (state: fromProduct.ProductState) => state.selectedProduct
+    (state: fromProduct.ProductState) => state.isLoadProductsfromFile
 );
 
 export const selectProducts = createSelector(

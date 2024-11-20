@@ -12,21 +12,13 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <!--<div class="col-3" *ngFor="let product of productsList$ | async">-->
-                        <div class="col-3" *ngFor="let product of productList$ | async">
-                            <div class="card">
-                                <img class="card-img-top" style="height: 12.125rem;" [src]="product.productImageUrl" alt="Card image">
-                                <div class="card-body">
-                                <h4 class="card-title">{{product.productName}}</h4>
-                                <h4 class="card-title">{{product.productPrice}}</h4>
-                                <a class="btn btn-primary" (click)="onSelect(product)">Select</a>
-                                <!-- #region <a href="#" class="btn btn-primary" (click)="onDelete(product.id)">Delete</a>-->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- <app-product-detail [product]="selectedProduct"></app-product-detail> -->
+                <div class="cards">
+                    <div class="cardItem" *ngFor="let product of productList$ | async">
+                            <img class="card-img-top" [src]="product.productImageUrl" alt="Card image">
+                            <h4 class="text">{{product.productName}}</h4>
+                            <h4 class="text">{{product.productPrice}}</h4>
+                            <button (click)="onSelect(product)">Select</button>
+                    </div>
                 </div>
             </div>
         </div>

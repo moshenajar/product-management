@@ -5,7 +5,7 @@ export const environment = {
     METHODS: {
         GET_ALL_PRODUCT: 'products.json',
         GET_ALL_CATEGORY: 'category',
-        CREATE_PRODUCT: 'products.json',
+        CREATE_PRODUCT: '',
         UPDATE_PRODUCT: 'product',
         DELETE_PRODUCT: 'product/'
     }

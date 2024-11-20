@@ -16,7 +16,7 @@ import { map } from 'rxjs';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProductDetailComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
