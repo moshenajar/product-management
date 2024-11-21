@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgIf, UpperCasePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Product } from '../product';
+import { Product } from '../../interface/product';
 import { NavigationExtras, Router } from '@angular/router';
 import { AppState } from "../../../store/app-state";
 import { select, Store } from "@ngrx/store";
 import { selectedProduct } from "../store/product/product.selectors";
 import { filter, first, map, Observable, take, tap } from "rxjs";
 import { productActions } from '../store/product/product.action';
-import { Action } from '../action';
+import { Action } from '../../interface/action';
 import { environment } from '../../../../environments/environment';
 import {Breakpoints} from '@angular/cdk/layout';
 

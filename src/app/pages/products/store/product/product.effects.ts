@@ -2,12 +2,13 @@ import { inject } from '@angular/core';
 import { catchError, exhaustMap, filter, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductService } from '../../../services/product/product.service';
+import { CategoryService } from '../../../services/category/category.service';
 import * as fromProductAcctions from '../product/product.action';
 import * as fromProductReducer from '../product/product.reducer';
-import { selectIsLoadProductsfromFile, selectProducts } from '../product/product.selectors';
+import { selectCategories, selectIsLoadCategoriesfromFile, selectIsLoadProductsfromFile, selectProducts } from '../product/product.selectors';
 import { env } from 'process';
 import { environment } from '../../../../../environments/environment';
-import { Product } from '../../product'
+import { Product } from '../../../interface/product'
 import { AppState } from '../../../../store/app-state'
 import { Store } from '@ngrx/store';
 
@@ -34,6 +35,37 @@ export const loadProductsEffect = createEffect((
           }),
           catchError((error) => {
             return of(fromProductAcctions.productActions.loadProductsFailure({ error }))
+          })
+        )
+      })
+    )
+  }, 
+  {functional: true}
+);
+
+
+export const loadCategoriesEffect = createEffect((
+  actions$ = inject(Actions),
+  store = inject(Store),
+  categoryService = inject(CategoryService)
+  )=> {
+    return actions$.pipe(
+      ofType(fromProductAcctions.productActions.loadCategories),
+      withLatestFrom( store.select(selectIsLoadCategoriesfromFile)),
+      filter(([action, isLoadCategoriesfromFile]) => 
+        //check if stubs mode 
+        //only first time get products from json file
+        //empty json file must include []
+        //environment.isStubs === false || (!productsList || !productsList.length)
+        environment.isStubs === false  || (environment.isStubs === true && isLoadCategoriesfromFile === false)
+       ),
+      switchMap(() => {
+        return categoryService.getCategory().pipe(
+          map((res: any) => {
+            return fromProductAcctions.productActions.loadCategoriesSuccess({ categoryList: res })
+          }),
+          catchError((error) => {
+            return of(fromProductAcctions.productActions.loadCategoriesFailure({ error }))
           })
         )
       })

@@ -1,0 +1,24 @@
+[
+    {
+        "id": "6706833080c16766d3c5eba9",
+        "categoryId": 1,
+        "categorySku": "כללי",
+        "categoryName": "כללי",
+        "categoryShortName": "כללי",
+        "categoryDescription": "כללי",
+        "createdDate": { "$date": "2018-11-10T22:26:12.111Z" },
+        "categoryImageUrl": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSlSmMQmoGhFnckZYMqmw7jMfr6xdBRVHpsd-PrU0D1UFa3_NB0",
+        "userId": 1977
+    },
+    {
+        "id": "6706833080c16766d3c5eba8",
+        "categoryId": 2,
+        "categorySku": "ירקות",
+        "categoryName": "ירקות",
+        "categoryShortName": "ירקות",
+        "categoryDescription": "ירקות",
+        "createdDate": { "$date": "2018-11-10T22:26:12.111Z" },
+        "categoryImageUrl": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSlSmMQmoGhFnckZYMqmw7jMfr6xdBRVHpsd-PrU0D1UFa3_NB0",
+        "userId": 1977
+    }
+]

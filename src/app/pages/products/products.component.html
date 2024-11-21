@@ -1,5 +1,24 @@
-<div class="row">
-    <div [ngClass]="isSidePanelVisible ? 'col-8' : 'col-12'">
+<div class="myForm">
+
+ <div class="row">
+  <div class="column" style="width: 20%;">
+    <div class="col1-3">
+        <div class="list-group">
+            <a 
+                *ngFor="let c of categories$ | async" 
+                routerLink="/products"
+                [queryParams]= "{ category: c.categoryId }"
+                class="list-group-item list-group-item-action"
+                [class.active]="category===c.categoryId"
+                >
+                {{ c.categoryName }}
+            </a>
+        </div>
+    </div>
+  </div>
+
+  <div class="column" style="width: 70%;">
+    <div [ngClass]="isSidePanelVisible ? 'col1-8' : 'col1-12'">
         <div class="card">
             <div class="card-header bg-primary">
                 <div class="row">
@@ -11,10 +30,13 @@
                     </div>
                 </div>
             </div>
+           
+
             <div class="card-body">
                 <div class="cards">
                     <div class="cardItem" *ngFor="let product of productList$ | async">
                             <img class="card-img-top" [src]="product.productImageUrl" alt="Card image">
+                            <h4 class="text">{{product.categoryId}}</h4>
                             <h4 class="text">{{product.productName}}</h4>
                             <h4 class="text">{{product.productPrice}}</h4>
                             <button (click)="onSelect(product)">Select</button>
@@ -23,6 +45,11 @@
             </div>
         </div>
     </div>
+</div>
+
+ </div>
+<!--
+
     <div class="col-4" *ngIf="isSidePanelVisible">
         <div class="card">
             <div class="card-header bg-primary">
@@ -50,4 +77,6 @@
               </div>
         </div>
     </div>
+-->
+
 </div>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Constant } from '../constant/constant';
 import { environment } from '../../../../environments/environment'
 import { map, Observable } from 'rxjs';
-import { Product } from '../../products/product';
+import { Product } from '../../interface/product';
 import { selectProducts } from '../../products/store/product/product.selectors';
 import { AppState } from '../../../store/app-state';
 import { Store } from "@ngrx/store";
@@ -16,12 +16,6 @@ export class ProductService {
   constructor(
     private http: HttpClient,
     private store: Store<AppState>,) {}
-
-  getCategory() {
-    return this.http.get(
-      environment.API_END_POINT + environment.METHODS.GET_ALL_CATEGORY
-    );
-  }
 
   getProducts(): Observable<{productList: Product[]}> {
     console.log("call getProducts service");
@@ -50,16 +44,4 @@ export class ProductService {
       environment.API_END_POINT + environment.METHODS.DELETE_PRODUCT + Id
     );
   }
-
-/*  tmp(obj: any){
-    return new Observable(observer => {  
-      fetch(environment.API_END_POINT + environment.METHODS.GET_ALL_PRODUCT)  
-        .then(response => response.json())  
-        .then(pikachu => {
-          observer.next(pikachu);  
-          observer.complete();  
-        })  
-        .catch(err => observer.error(err)) 
-    });
-  }*/
 }

@@ -1,5 +1,6 @@
 import { createAction, createActionGroup, emptyProps, props } from "@ngrx/store";
-import { Product } from "../../product";
+import { Product } from "../../../interface/product";
+import { Category } from "../../../interface/category";
 
 
 /*
@@ -28,6 +29,11 @@ export const productActions = createActionGroup({
   events: {
     resetProduct: emptyProps(),
     setSelectedProduct: props<{ product:Product }>(),
+    setSelectCategory: props<{ categoruId:number }>(),
+
+    loadCategories : emptyProps(),
+    'loadCategories success': props<{ categoryList: Category[] }>(),
+    'loadCategories Failure': props<{ error: any }>(), 
 
     loadProducts : emptyProps(),
     'loadProducts success': props<{ productList: Product[] }>(),
@@ -36,8 +42,6 @@ export const productActions = createActionGroup({
     UpdateProduct: props<{ product: Product}>(),
     'UpdateProduct success': emptyProps(),
     'UpdateProduct failure': props<{ error: any }>(), 
-
-    //updateProductStore: props<{ product: Product}>(), 
 
     CreateProduct: props<{ product: Product}>(),
     'CreateProduct success': emptyProps(),

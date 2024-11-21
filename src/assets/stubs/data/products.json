@@ -11,5 +11,18 @@
         "categoryId": 1,
         "productImageUrl": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSlSmMQmoGhFnckZYMqmw7jMfr6xdBRVHpsd-PrU0D1UFa3_NB0",
         "userId": 1977
+    },
+    {
+        "id": "6706833080c16766d3c5eba8",
+        "productSku": "bk",
+        "productName": "aaa",
+        "productPrice": 222,
+        "productShortName": "book",
+        "productDescription": "book for trip",
+        "createdDate": { "$date": "2018-11-10T22:26:12.111Z" },
+        "deliveryTimeSpan": "3",
+        "categoryId": 2,
+        "productImageUrl": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSlSmMQmoGhFnckZYMqmw7jMfr6xdBRVHpsd-PrU0D1UFa3_NB0",
+        "userId": 1977
     }
 ]
