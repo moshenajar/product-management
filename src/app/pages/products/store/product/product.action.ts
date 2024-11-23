@@ -29,11 +29,11 @@ export const productActions = createActionGroup({
   events: {
     resetProduct: emptyProps(),
     setSelectedProduct: props<{ product:Product }>(),
-    setSelectCategory: props<{ categoruId:number }>(),
+    //setSelectCategory: props<{ categoryId:number }>(),
 
-    loadCategories : emptyProps(),
-    'loadCategories success': props<{ categoryList: Category[] }>(),
-    'loadCategories Failure': props<{ error: any }>(), 
+    //loadCategories : emptyProps(),
+    //'loadCategories success': props<{ categoryList: Category[] }>(),
+    //'loadCategories Failure': props<{ error: any }>(), 
 
     loadProducts : emptyProps(),
     'loadProducts success': props<{ productList: Product[] }>(),

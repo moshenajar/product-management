@@ -1,0 +1,51 @@
+<!-- #region  <div *ngIf="product" > -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="myForm">
+        <!--<h2>{{product.productName| uppercase}} Details</h2> -->
+        <ul class="wrapper">
+  
+          <li class="form-row">
+            <label for="category">category: </label>
+            <input id="category" type="text" formControlName="category" placeholder="category"> 
+          </li>
+          <li class="form-row">
+            <label for="category-sku">Category Sku: </label>
+            <input id="category-sku" type="text" formControlName="categorySku" placeholder="category Sku"> 
+          </li>
+        
+  
+          <li class="form-row">
+            <label for="category-name">Category Name: </label>
+            <input id="category-name" type="text" formControlName="categoryName" placeholder="Category Name"> 
+          </li>
+  
+          <li class="form-row">
+            <label for="category-short-name">Category Short Name: </label>
+            <input id="category-short-name" type="text" formControlName="categoryShortName" placeholder="Category Short Name"> 
+          </li>
+  
+          <li class="form-row">
+            <label for="category-description">Category Description: </label>
+            <input id="category-description" type="text" formControlName="categoryDescription" placeholder="Category Description"> 
+          </li>
+       
+  
+          <li class="form-row">
+            <label for="category-imageUrl">Category ImageUrl: </label>
+            <input id="category-imageUrl" type="text" formControlName="categoryImageUrl" placeholder="Category ImageUrl"> 
+          </li>
+  
+  
+        
+  
+          <li class="form-row">
+  
+            <button class="button" *ngIf="action !== 2" (click)="onUpdateClick()">לְעַדְכֵּן</button>
+            <button class="button" *ngIf="action !== 2" (click)="onDeleteClick()">לִמְחוֹק</button>
+            <button class="button" *ngIf="action === 2">לִיצוֹר</button>
+  
+          </li>
+  
+        
+      </ul>
+      </form>
+  <!-- #region  </div>-->

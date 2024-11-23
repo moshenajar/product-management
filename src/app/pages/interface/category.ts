@@ -6,6 +6,6 @@ export interface Category {
     "categoryShortName": string,
     "categoryDescription": string,
     "createdDate": Date,
-    "productImageUrl": string,
+    "categoryImageUrl": string,
     "userId": number
   }

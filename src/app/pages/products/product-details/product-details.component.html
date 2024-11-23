@@ -3,12 +3,17 @@
       <!--<h2>{{product.productName| uppercase}} Details</h2> -->
       <ul class="wrapper">
 
-      
         <li class="form-row">
-          <label for="category-id">categoryId: </label>
-          <input id="category-id" type="text" formControlName="categoryId" placeholder="categoryId"> 
+          <label for="category-id">category: </label>
+          <select name="select" formControlName="category" id="category-id">
+            <option [ngValue]="null" disabled>categories</option>
+            @for (category of categories$ | async;track category.categoryId){
+            <option [value]="category.categoryId">
+              {{ category.categoryName }}
+            </option>
+            }
+          </select>
         </li>
-
         <li class="form-row">
           <label for="sku">sku: </label>
           <input id="sku" type="text" formControlName="Sku" placeholder="Sku"> 

@@ -7,13 +7,20 @@
       <div class="collapse navbar-collapse" id="mynavbar">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)">Link</a>
+            <a class="nav-link" 
+              routerLink="/products"
+              [class.active]="1==1"
+              >
+              products
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)">Link</a>
+            <a class="nav-link" 
+              routerLink="/categories"
+              [class.active]="1==1"
+              >
+              categories
+            </a>
           </li>
         </ul>
         <form class="d-flex">

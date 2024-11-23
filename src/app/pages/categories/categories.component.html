@@ -1,1 +1,36 @@
-<p>categories works!</p>
+<div class="myForm">
+
+    <div class="row">
+     
+   
+     <div class="column">
+       <!--<div [ngClass]="isSidePanelVisible ? 'col1-8' : 'col1-12'">-->
+           <div class="card">
+               <div class="card-header bg-primary">
+                   <div class="row">
+                       <div class="col-6">
+                           Category List
+                       </div>
+                         <div class="col-6 text-end">
+                           <button class="btn btn-sm btn-success" (click)="onCreate()">New</button>
+                       </div>
+                   </div>
+               </div>
+              
+   
+               <div class="card-body">
+                   <div class="cards">
+                       <div class="cardItem" *ngFor="let category of categoryList$ | async">
+                               <img class="card-img-top" [src]="category.categoryImageUrl" alt="Card image">
+                               <h4 class="text">{{category.categoryId}}</h4>
+                               <h4 class="text">{{category.categoryName}}</h4>
+                               <button (click)="onSelect(category)">Select</button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+      <!-- </div>-->
+   </div>
+   
+    </div>
+   </div>

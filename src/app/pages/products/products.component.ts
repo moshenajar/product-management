@@ -7,8 +7,11 @@ import { ActivatedRoute, NavigationExtras, Router, RouterLink } from '@angular/r
 import { AppState } from '../../store/app-state';
 import { Store } from "@ngrx/store";
 import { productActions } from "../products/store/product/product.action";
-import { selectProducts, selectCategories } from './store/product/product.selectors';
+import { selectProducts } from './store/product/product.selectors';
+import { selectCategories } from '../categories/store/category/category.selectors';
 import { combineLatest, filter, map, Observable } from 'rxjs';
+import { categoryActions } from '../categories/store/category/category.action';
+
 
 
 @Component({
@@ -20,8 +23,8 @@ import { combineLatest, filter, map, Observable } from 'rxjs';
 })
 export class ProductsComponent implements OnInit {
   
-  isSidePanelVisible: boolean = false;
-  categoryList: any[] = [];
+  //isSidePanelVisible: boolean = false;
+  //categoryList: any[] = [];
   product!: Product;
   selectedProduct?: Product;
   categories$ = this.store.select(selectCategories);
@@ -55,7 +58,7 @@ export class ProductsComponent implements OnInit {
   }
 
   getAllCategory() {
-    this.store.dispatch(productActions.loadCategories());
+    this.store.dispatch(categoryActions.loadCategories());
   }
 
   getProducts() {

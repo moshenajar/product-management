@@ -2,7 +2,9 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { LayoutComponent } from './layout/layout.component';
 import { ProductsComponent } from './pages/products/products.component';
-import { ProductDetailComponent } from './pages/products/product-detail/product-detail.component';
+import { ProductDetailsComponent } from './pages/products/product-details/product-details.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { CategoryDetailsComponent } from './pages/categories/category-details/category-details.component';
 
 export const routes: Routes = [
 
@@ -25,7 +27,15 @@ export const routes: Routes = [
             },
             {
                 path:'productdetails',
-                component: ProductDetailComponent
+                component: ProductDetailsComponent
+            },
+            {
+                path:'categories',
+                component: CategoriesComponent
+            },
+            {
+                path:'categorydetails',
+                component: CategoryDetailsComponent
             }
         ]
     }

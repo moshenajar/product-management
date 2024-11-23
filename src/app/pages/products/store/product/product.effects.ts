@@ -4,8 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductService } from '../../../services/product/product.service';
 import { CategoryService } from '../../../services/category/category.service';
 import * as fromProductAcctions from '../product/product.action';
-import * as fromProductReducer from '../product/product.reducer';
-import { selectCategories, selectIsLoadCategoriesfromFile, selectIsLoadProductsfromFile, selectProducts } from '../product/product.selectors';
+import { selectIsLoadProductsfromFile, selectProducts } from '../product/product.selectors';
 import { env } from 'process';
 import { environment } from '../../../../../environments/environment';
 import { Product } from '../../../interface/product'
@@ -44,7 +43,7 @@ export const loadProductsEffect = createEffect((
 );
 
 
-export const loadCategoriesEffect = createEffect((
+/*export const loadCategoriesEffect = createEffect((
   actions$ = inject(Actions),
   store = inject(Store),
   categoryService = inject(CategoryService)
@@ -72,7 +71,7 @@ export const loadCategoriesEffect = createEffect((
     )
   }, 
   {functional: true}
-);
+);*/
 
 export const updateProductEffect = createEffect((
   actions$ = inject(Actions),

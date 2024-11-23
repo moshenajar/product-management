@@ -1,7 +1,6 @@
 import { Action, createFeature, createReducer, on } from "@ngrx/store"
 import { Product } from "../../../interface/product";
 import { productActions } from "./product.action";
-import { state } from "@angular/animations";
 import { environment } from "../../../../../environments/environment";
 import { Category } from "../../../interface/category";
 
@@ -14,8 +13,8 @@ export interface ProductState{
     productList: Product[],
     isStubs: boolean,
     isLoadProductsfromFile: boolean,
-    categoryList: Category[]
-    isLoadCategoriesfromFile: boolean,
+    //categoryList: Category[],
+    //isLoadCategoriesfromFile: boolean,
 }
 
 const initialState: ProductState = {
@@ -23,8 +22,8 @@ const initialState: ProductState = {
     productList: [],
     isStubs: environment.isStubs,
     isLoadProductsfromFile: false,
-    categoryList: [],
-    isLoadCategoriesfromFile: false
+    //categoryList: [],
+    //isLoadCategoriesfromFile: false
 };
 
 const productFeature = createFeature({
@@ -36,8 +35,8 @@ const productFeature = createFeature({
       productList: [],
       isStubs: environment.isStubs,
       isLoadProductsfromFile: false,
-      categoryList: [],
-      isLoadCategoriesfromFile: false
+      //categoryList: [],
+      //isLoadCategoriesfromFile: false
     })),
 
     on(productActions.setSelectedProduct, (state, action) => ({
@@ -45,21 +44,21 @@ const productFeature = createFeature({
       selectedProduct: action.product 
     })),
 
-    on(productActions.setSelectCategory, (state, action) => {
+   /* on(productActions.setSelectCategory, (state, action) => {
       
       return{
         ...state, 
-        selectCategory: action.categoruId 
+        selectCategory: action.categoryId 
       }
-    }),
+    }),*/
 
-    on(productActions.loadCategories, (state) => ({
+   /* on(productActions.loadCategories, (state) => ({
       
       ...state,
       selectedProduct: null,
-    })),
+    })),*/
 
-    on(productActions.loadCategoriesSuccess, (state, {categoryList}) => {
+   /* on(productActions.loadCategoriesSuccess, (state, {categoryList}) => {
       let isLoadingFromFile = false;
       if(state.isStubs === true)
       {
@@ -71,12 +70,12 @@ const productFeature = createFeature({
         selectedProduct: null,
         isLoadCategoriesfromFile: isLoadingFromFile
       }
-    }),
-    on(productActions.loadCategoriesFailure, (state, { error }) => ({
+    }),*/
+    /*on(productActions.loadCategoriesFailure, (state, { error }) => ({
       ...state,
       categoryList: [],
       selectedProduct: null
-    })),
+    })),*/
 
 
     on(productActions.loadProducts, (state) => ({
@@ -105,6 +104,15 @@ const productFeature = createFeature({
       productList: [],
       selectedProduct: null
     })),
+    on(productActions.updateProduct, (state, { product }) => {
+      const update: Partial<Product> & { id: string } = product;
+      const updateProductList = state.productList.map(product => product.id !== update.id ? product : { ...product, ...update });
+      return{
+        ...state,
+        productList: updateProductList,
+        selectedProduct: null
+      }
+    }),
     on(productActions.updateProductSuccess, (state) => ({
       ...state,
       //productList: [],
@@ -120,15 +128,7 @@ const productFeature = createFeature({
       productList: [...state.productList, product],
       selectedProduct: null
     })),
-    on(productActions.updateProduct, (state, { product }) => {
-      const update: Partial<Product> & { id: string } = product;
-      const updateProductList = state.productList.map(product => product.id !== update.id ? product : { ...product, ...update });
-      return{
-        ...state,
-        productList: updateProductList,
-        selectedProduct: null
-      }
-    }),
+    
     on(productActions.deleteProduct, (state, { productId }) => {
       const updateProductList = state.productList.filter(obj => obj.id !== productId)
       return{

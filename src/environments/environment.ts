@@ -4,9 +4,14 @@ export const environment = {
     API_END_POINT: 'http://localhost:8082/api/',
     METHODS: {
         GET_ALL_PRODUCT: 'product/products',
-        GET_ALL_CATEGORY: 'category',
+        //GET_ALL_CATEGORY: 'category',
         CREATE_PRODUCT: 'product/create',
         UPDATE_PRODUCT: 'product',
-        DELETE_PRODUCT: 'product/'
+        DELETE_PRODUCT: 'product/',
+
+        GET_ALL_CATEGORY: 'categories.json',
+        CREATE_CATEGORY: '',
+        UPDATE_CATEGORY: 'category',
+        DELETE_CATEGORY: 'category/'
     }
 };

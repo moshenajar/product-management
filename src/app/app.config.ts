@@ -11,6 +11,11 @@ import * as fromProductStore from './pages/products/store/product/product.reduce
 import * as fromProductEffects from './pages/products/store/product/product.effects';
 import { productReducer } from './pages/products/store/product/product.reducer';
 
+import * as fromCategoryStore from './pages/categories/store/category/category.reducer';
+import * as fromCategoryEffects from './pages/categories/store/category/category.effects';
+import { categoryReducer } from './pages/categories/store/category/category.reducer';
+
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
@@ -18,10 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(), 
     provideStore(),
     provideState(fromProductStore.productFeatureKey, productReducer),
-    /*provideState({
-      name: fromProductStore.productsFeatureKey, 
-      reducer: fromProductStore.productsReducer
-    }),  */
-    provideEffects(fromProductEffects),
+    provideState(fromCategoryStore.categoryFeatureKey, categoryReducer),
+    provideEffects(fromProductEffects,fromCategoryEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })]
 };

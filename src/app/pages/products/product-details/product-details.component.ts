@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgIf, UpperCasePipe } from '@angular/common';
+import { CommonModule, NgIf, UpperCasePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Product } from '../../interface/product';
 import { NavigationExtras, Router } from '@angular/router';
 import { AppState } from "../../../store/app-state";
 import { select, Store } from "@ngrx/store";
 import { selectedProduct } from "../store/product/product.selectors";
+import { selectCategories } from '../../categories/store/category/category.selectors';
 import { filter, first, map, Observable, take, tap } from "rxjs";
 import { productActions } from '../store/product/product.action';
 import { Action } from '../../interface/action';
@@ -15,18 +16,19 @@ import {Breakpoints} from '@angular/cdk/layout';
 
 
 @Component({
-  selector: 'app-product-detail',
+  selector: 'app-product-details',
   standalone: true,
-  templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.scss',
-  imports: [NgIf, UpperCasePipe, ReactiveFormsModule],
+  templateUrl: './product-details.component.html',
+  styleUrl: './product-details.component.scss',
+  imports: [CommonModule, NgIf, UpperCasePipe, ReactiveFormsModule],
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit {
   //@Input() product?: Product;
   //selectedProduct?: Product;
   selectProduct$ = this.store.select(selectedProduct);
   productId: string  = '';
   action: Action = Action.None;
+  categories$ = this.store.select(selectCategories);
   
 
 
@@ -38,9 +40,12 @@ export class ProductDetailComponent implements OnInit {
   }
 
   form = new FormGroup({
-    categoryId: new FormControl('', {
+    category: new FormControl('', {
       validators:[Validators.required]
     }),
+    /*categoryId: new FormControl('', {
+      validators:[Validators.required]
+    }),*/
     Sku: new FormControl('', {
       validators:[Validators.required]
     }),
@@ -64,7 +69,7 @@ export class ProductDetailComponent implements OnInit {
  
   ngOnInit(): void {
 
-    console.log('Web ' + Breakpoints.Web);
+   /* console.log('Web ' + Breakpoints.Web);
 console.log('WebLandscape ' + Breakpoints.WebLandscape);
 console.log('WebPortrait ' + Breakpoints.WebPortrait);
 
@@ -80,7 +85,7 @@ console.log('XSmall ' + Breakpoints.XSmall);
 console.log('Small ' + Breakpoints.Small);
 console.log('Medium ' + Breakpoints.Medium);
 console.log('Large ' + Breakpoints.Large);
-console.log('XLarge ' + Breakpoints.XLarge);
+console.log('XLarge ' + Breakpoints.XLarge);*/
     /*this.selectProduct$.subscribe(obg=>{
       console.log(obg);
     });*/
@@ -88,7 +93,8 @@ console.log('XLarge ' + Breakpoints.XLarge);
      this.selectProduct$.subscribe(obg=>{
       if(typeof obg!='undefined' && obg){
         this.productId = obg?.id as string;
-        this.form.controls.categoryId.setValue(obg?.categoryId! as any);
+        this.form.controls.category.setValue(obg?.categoryId! as any);
+        //this.form.controls.categoryId.setValue(obg?.categoryId! as any);
         this.form.controls.Sku.setValue(obg?.productSku ?? "");
         this.form.controls.productName.setValue(obg?.productName ?? "");
         this.form.controls.productPrice.setValue(obg?.productPrice! as any);
@@ -120,6 +126,7 @@ console.log('XLarge ' + Breakpoints.XLarge);
   }
 
   onSubmit(){
+    console.log("category:" + this.form?.value.category);
     if(environment.isStubs === true && this.action === Action.Create )
         this.productId = this.newObjectId();
       
@@ -132,9 +139,9 @@ console.log('XLarge ' + Breakpoints.XLarge);
       productDescription: this.form?.value.productDescription ?? "",
       createdDate: new Date(),
       deliveryTimeSpan: this.form?.value.productDescription ?? "",
-      categoryId: this.form?.value.categoryId! as any,
+      categoryId: this.form?.value.category! as any,
       productImageUrl: this.form?.value.productImageUrl ?? "",
-      userId: this.form?.value.categoryId! as any,
+      userId: this.form?.value.category! as any,
     }
 
     switch (this.action) {
